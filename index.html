@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Birthday Roast Machine</title>
+
+<style>
+body{
+background:#111;
+color:white;
+font-family:Arial;
+text-align:center;
+padding:50px;
+}
+
+input{
+padding:10px;
+width:220px;
+}
+
+button{
+padding:10px 20px;
+margin-top:10px;
+}
+
+#result{
+margin-top:25px;
+font-size:20px;
+color:#ff5c5c;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Send Me Your Birthday Wish 🎂</h1>
+
+<input id="wish" placeholder="Type your wish">
+
+<br><br>
+
+<button onclick="roast()">Submit</button>
+
+<p id="result"></p>
+
+<script>
+
+function roast(){
+
+let text=document.getElementById("wish").value.toLowerCase()
+
+if(text.includes("happy")){
+document.getElementById("result").innerText="Original. You discovered the word happy."
+}
+
+else if(text.includes("bro")){
+document.getElementById("result").innerText="Calling me bro doesn't make that wish less lazy."
+}
+
+else if(text.length < 8){
+document.getElementById("result").innerText="That wish was shorter than my patience."
+}
+
+else{
+document.getElementById("result").innerText="I read your wish twice. It didn't improve."
+}
+
+}
+
+</script>
+
+</body>
+</html>
