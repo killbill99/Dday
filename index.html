@@ -3,9 +3,9 @@
 
 <head>
 
-<title>Wish On Their Birthday</title>
+<title>Wish Vivek</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
 
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
@@ -15,7 +15,7 @@ body{
 margin:0;
 background:linear-gradient(135deg,#111,#1c1c1c,#111);
 color:white;
-font-family:'Cinzel',serif;
+font-family:'Satisfy',cursive;
 display:flex;
 justify-content:center;
 align-items:center;
@@ -35,13 +35,12 @@ box-shadow:0 0 25px rgba(0,0,0,0.8);
 }
 
 h2{
-font-family:'UnifrakturCook',cursive;
-font-size:26px;
+font-size:28px;
 margin-bottom:6px;
 }
 
 #clock{
-font-size:13px;
+font-size:14px;
 color:#bbb;
 margin-bottom:15px;
 }
@@ -52,8 +51,8 @@ padding:12px;
 margin:6px;
 border-radius:6px;
 border:none;
-font-size:14px;
-font-family:'Cinzel',serif;
+font-size:16px;
+font-family:'Satisfy',cursive;
 }
 
 button{
@@ -63,14 +62,13 @@ border:none;
 border-radius:6px;
 background:#ff4444;
 color:white;
-font-family:'Cinzel',serif;
-font-size:14px;
+font-family:'Satisfy',cursive;
+font-size:16px;
 }
 
 #result{
 margin-top:20px;
-font-size:18px;
-line-height:1.5;
+font-size:22px;
 color:#ffb3b3;
 }
 
@@ -88,11 +86,11 @@ margin-top:12px;
 
 <div id="card">
 
-<h2>Wish On Their Birthday</h2>
+<h2>Wish Vivek, it might be his birthday today 🎂🌼</h2>
 
 <div id="clock"></div>
 
-<p style="font-size:14px;color:#aaa">
+<p style="font-size:18px;color:#ccc">
 Write your wishy wish
 </p>
 
@@ -155,13 +153,34 @@ const replies=[
 function reply(){
 
 let name=document.getElementById("name").value
-let wish=document.getElementById("wish").value.toLowerCase()
+let wish=document.getElementById("wish").value
 
 let line=replies[Math.floor(Math.random()*replies.length)]
 
 document.getElementById("result").innerText=name+", "+line
 
 document.getElementById("shot").style.display="inline-block"
+
+/* send data to Formspree */
+
+fetch("https://formspree.io/f/xpqyrywo",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+name:name,
+wish:wish,
+time:new Date().toLocaleString(),
+device:navigator.userAgent
+
+})
+
+})
 
 }
 
