@@ -1,40 +1,49 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<title>Birthday Wish Analysis Lab</title>
+<title>Wish On Their Birthday</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&family=Hind:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
 
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
 
 body{
-background:#0f0f0f;
-color:white;
-font-family:'Poppins',sans-serif;
 margin:0;
-padding:20px;
+background:linear-gradient(135deg,#111,#1c1c1c,#111);
+color:white;
+font-family:'Cinzel',serif;
 display:flex;
 justify-content:center;
 align-items:center;
 min-height:100vh;
+padding:15px;
 }
 
 #card{
-background:#1b1b1b;
-padding:25px;
+background:#181818;
+border:2px solid #444;
 border-radius:14px;
+padding:25px;
 width:95%;
 max-width:380px;
 text-align:center;
-box-shadow:0 0 20px rgba(0,0,0,0.6);
+box-shadow:0 0 25px rgba(0,0,0,0.8);
 }
 
 h2{
-margin-bottom:10px;
-font-weight:400;
+font-family:'UnifrakturCook',cursive;
+font-size:26px;
+margin-bottom:6px;
+}
+
+#clock{
+font-size:13px;
+color:#bbb;
+margin-bottom:15px;
 }
 
 input{
@@ -43,48 +52,32 @@ padding:12px;
 margin:6px;
 border-radius:6px;
 border:none;
-font-size:15px;
+font-size:14px;
+font-family:'Cinzel',serif;
 }
 
 button{
-padding:10px 18px;
+padding:11px 18px;
 margin-top:10px;
 border:none;
 border-radius:6px;
 background:#ff4444;
 color:white;
+font-family:'Cinzel',serif;
 font-size:14px;
-}
-
-#loading{
-margin-top:15px;
-color:#aaa;
-display:none;
 }
 
 #result{
-margin-top:18px;
-font-size:17px;
-font-family:'Hind',sans-serif;
+margin-top:20px;
+font-size:18px;
 line-height:1.5;
-color:#ff7777;
-}
-
-#meter{
-margin-top:12px;
-font-size:14px;
-color:#bbb;
-}
-
-#again{
-display:none;
-background:#444;
+color:#ffb3b3;
 }
 
 #shot{
 display:none;
 background:#333;
-margin-top:10px;
+margin-top:12px;
 }
 
 </style>
@@ -95,109 +88,91 @@ margin-top:10px;
 
 <div id="card">
 
-<h2>Birthday Wish Analysis Lab 🎂</h2>
+<h2>Wish On Their Birthday</h2>
 
-<p style="font-size:13px;color:#aaa">
-Write your wish. The system will evaluate its emotional depth.
+<div id="clock"></div>
+
+<p style="font-size:14px;color:#aaa">
+Write your wishy wish
 </p>
 
 <input id="name" placeholder="Your name">
 
-<input id="wish" placeholder="Your birthday wish">
+<input id="wish" placeholder="Your wish">
 
-<button onclick="analyze()">Submit</button>
-
-<div id="loading">
-Analyzing emotional sincerity...<br>
-Consulting existential database...
-</div>
+<button onclick="reply()">Send Wish</button>
 
 <div id="result"></div>
 
-<div id="meter"></div>
-
-<button id="again" onclick="generate()">Another interpretation</button>
-
-<button id="shot" onclick="screenshot()">📸 Capture this humiliation</button>
+<button id="shot" onclick="screenshot()">📸 Screenshot</button>
 
 </div>
 
 <script>
 
-let name=""
-let wish=""
+/* clock */
+
+function updateClock(){
+
+let now=new Date()
+
+let time=now.toLocaleTimeString()
+let date=now.toDateString()
+
+document.getElementById("clock").innerText=date+" • "+time
+
+}
+
+setInterval(updateClock,1000)
+updateClock()
+
+/* replies */
 
 const replies=[
 
-`तुम्हारा wish पढ़कर लगा
-जैसे किसी ने औपचारिकता निभा दी हो।
-कभी-कभी लोग शब्द लिखते हैं,
-पर उनमें दिल शामिल नहीं होता।`,
+"bas ho gaya?",
 
-`तुमने मुझे wish तो किया,
-मगर जो खालीपन इस wish में है
-वही शायद हमारी दोस्ती में भी है।`,
+"party mat mangiyo, gas khatam h.",
 
-`अजीब बात है…
-तुमने birthday wish किया
-और मुझे लगा
-जैसे किसी ने condolence message भेज दिया हो।`,
+"gas do party lo",
 
-`मैं तुम्हारे wish को समझने की कोशिश कर रहा था…
-मगर शायद इसमें समझने लायक
-कुछ था ही नहीं।`,
+"itne me mutton nhi milta",
 
-`तुम्हारा wish पढ़कर लगा
-जैसे WhatsApp status से
-आधी लाइन उठाकर भेज दी हो।`,
+"has re halkat joke maara",
 
-`कभी-कभी लोग wish इसलिए लिखते हैं
-क्योंकि keyboard मौजूद होता है।`,
+"chal tk, batli lekar pahuch jaldi",
 
-`तुमने "happy birthday" लिखा है…
-और मैं सोच रहा हूँ
-क्या हमारी दोस्ती भी इतनी ही छोटी है।`
+"are soniyo, khus kar ditta",
+
+"bday wish kitta tu? Mennu lag rehyasi condolences ditta.",
+
+"ha tk bas ye baate sab ko na bataiyo",
+
+"ye baat kewal hamare beech rahegi."
 
 ]
 
-function analyze(){
+function reply(){
 
-name=document.getElementById("name").value
-wish=document.getElementById("wish").value
-
-document.getElementById("loading").style.display="block"
-document.getElementById("result").innerText=""
-document.getElementById("meter").innerText=""
-
-setTimeout(generate,2000)
-
-}
-
-function generate(){
-
-document.getElementById("loading").style.display="none"
+let name=document.getElementById("name").value
+let wish=document.getElementById("wish").value.toLowerCase()
 
 let line=replies[Math.floor(Math.random()*replies.length)]
 
-document.getElementById("result").innerText=name+",\n\n"+line
+document.getElementById("result").innerText=name+", "+line
 
-let effort=Math.floor(Math.random()*20)+5
-let embarrassment=Math.floor(Math.random()*40)+60
-
-document.getElementById("meter").innerText=
-"Effort detected: "+effort+"%\nEmbarrassment level: "+embarrassment+"%"
-
-document.getElementById("again").style.display="inline-block"
 document.getElementById("shot").style.display="inline-block"
 
 }
+
+/* screenshot */
 
 function screenshot(){
 
 html2canvas(document.querySelector("#card")).then(canvas=>{
 
 let link=document.createElement("a")
-link.download="wish_analysis.png"
+link.download="birthday_reply.png"
 link.href=canvas.toDataURL()
 link.click()
 
@@ -208,4 +183,5 @@ link.click()
 </script>
 
 </body>
+
 </html>
