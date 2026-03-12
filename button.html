@@ -1,0 +1,87 @@
+<!DOCTYPE html><html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Win ₹1000</title><style>
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:sans-serif;
+background:#f4f4f4;
+overflow:hidden;
+text-align:center;
+}
+
+h2{
+position:absolute;
+top:40px;
+width:100%;
+}
+
+#btn{
+position:absolute;
+padding:15px 30px;
+font-size:18px;
+background:#ff4d4d;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+transition:0.1s;
+}
+</style></head><body><h2>Tap the button to win ₹1000</h2><button id="btn">TAP ME</button>
+
+<script>
+
+const btn = document.getElementById("btn");
+let attempts = 0;
+
+function moveButton(){
+
+attempts++;
+
+const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+
+btn.style.left = x + "px";
+btn.style.top = y + "px";
+
+if(attempts == 10){
+alert("You seem very determined.");
+}
+
+if(attempts == 20){
+alert("This is getting embarrassing.");
+}
+
+}
+
+// desktop
+btn.addEventListener("mouseover", moveButton);
+
+// phone
+btn.addEventListener("touchstart", moveButton);
+
+btn.addEventListener("click", function(){
+
+document.body.innerHTML = `
+<div style="
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:32px;
+font-family:sans-serif;
+text-align:center;
+padding:20px;
+">
+You worked very hard for nothing.
+</div>
+`;
+
+});
+
+</script></body>
+</html>
