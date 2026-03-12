@@ -3,66 +3,139 @@
 <head>
 <title>Birthday Roast Machine</title>
 
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
 <style>
+
 body{
-background:#111;
+background:#0f0f0f;
 color:white;
 font-family:Arial;
 text-align:center;
-padding:50px;
+padding:40px;
+}
+
+#card{
+background:#1b1b1b;
+padding:30px;
+border-radius:12px;
+display:inline-block;
+width:330px;
 }
 
 input{
 padding:10px;
-width:220px;
+width:230px;
+margin:5px;
+border:none;
+border-radius:6px;
 }
 
 button{
 padding:10px 20px;
 margin-top:10px;
+border:none;
+border-radius:6px;
+background:#ff4444;
+color:white;
+cursor:pointer;
 }
 
 #result{
-margin-top:25px;
+margin-top:20px;
 font-size:20px;
-color:#ff5c5c;
+color:#ff6b6b;
 }
+
+#loading{
+margin-top:15px;
+color:#aaa;
+display:none;
+}
+
+#shot{
+display:none;
+margin-top:15px;
+background:#444;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>Send Me Your Birthday Wish 🎂</h1>
+<div id="card">
 
-<input id="wish" placeholder="Type your wish">
+<h2>Send Me Your Birthday Wish 🎂</h2>
 
-<br><br>
+<input id="name" placeholder="Your name">
 
-<button onclick="roast()">Submit</button>
+<br>
 
-<p id="result"></p>
+<input id="wish" placeholder="Your wish">
+
+<br>
+
+<button onclick="analyze()">Submit</button>
+
+<div id="loading">Analyzing your intelligence...</div>
+
+<div id="result"></div>
+
+<button id="shot" onclick="screenshot()">Screenshot this embarrassment</button>
+
+</div>
 
 <script>
 
+function analyze(){
+
+document.getElementById("result").innerText=""
+document.getElementById("loading").style.display="block"
+
+setTimeout(roast,2000)
+
+}
+
 function roast(){
 
-let text=document.getElementById("wish").value.toLowerCase()
+let name=document.getElementById("name").value
+let wish=document.getElementById("wish").value.toLowerCase()
 
-if(text.includes("happy")){
-document.getElementById("result").innerText="Original. You discovered the word happy."
+let reply=""
+
+if(wish.includes("happy")){
+reply=name + ", groundbreaking discovery. You used the word 'happy'."
 }
 
-else if(text.includes("bro")){
-document.getElementById("result").innerText="Calling me bro doesn't make that wish less lazy."
+else if(wish.includes("bro") || wish.includes("bhai")){
+reply=name + ", calling me bro doesn't save that lazy wish."
 }
 
-else if(text.length < 8){
-document.getElementById("result").innerText="That wish was shorter than my patience."
+else if(wish.length < 8){
+reply=name + ", that wish was shorter than my patience."
 }
 
 else{
-document.getElementById("result").innerText="I read your wish twice. It didn't improve."
+reply=name + ", I read your wish twice. It somehow got worse."
 }
+
+document.getElementById("loading").style.display="none"
+document.getElementById("result").innerText=reply
+document.getElementById("shot").style.display="inline-block"
+
+}
+
+function screenshot(){
+
+html2canvas(document.querySelector("#card")).then(canvas=>{
+
+let link=document.createElement("a")
+link.download="roasted.png"
+link.href=canvas.toDataURL()
+link.click()
+
+})
 
 }
 
